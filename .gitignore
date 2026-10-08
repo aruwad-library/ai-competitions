@@ -1,0 +1,8 @@
+# General
+.venv/
+
+# Custom
+tmp/
+data/
+*.db
+*.csv
