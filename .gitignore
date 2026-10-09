@@ -6,3 +6,8 @@ tmp/
 data/
 *.db
 *.csv
+*.json
+
+eda_results/
+main_eda_assets/
+prediction_results/
