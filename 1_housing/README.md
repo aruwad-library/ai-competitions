@@ -15,7 +15,7 @@
 
 <br>
 
-![final_leaderboard.png](./final_leaderboard.png)
+<img src="./final_leaderboard.png" width="600">
 
 # Highlights
 - A well-established example of modern ML pipeline for typical tabular regression.
