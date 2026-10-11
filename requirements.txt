@@ -9,7 +9,7 @@ optuna-dashboard
 xgboost
 lightgbm
 catboost
-install "cupy-cuda13x[ctk]"
+# pip install "cupy-cuda13x[ctk]"
 
 # torch
 # pip install torch==2.12.1 torchvision==0.27.1 --index-url https://download.pytorch.org/whl/cu130      # for rtx5090.
@@ -18,19 +18,19 @@ install "cupy-cuda13x[ctk]"
 # torchinfo
 
 # NLP
-# transformers
-# datasets
-# accelerate
-# sentence-transformers
-# peft
-# bitsandbytes
-# trl
-# lm_eval[hf]
+transformers
+datasets
+accelerate
+sentence-transformers
+peft
+bitsandbytes
+trl
+lm_eval[hf]
 
 # RAG
-# qdrant-client
-# ir-measures
-# fastembed
+qdrant-client
+ir-measures
+fastembed
 # faiss-cpu
 
 # Misc
