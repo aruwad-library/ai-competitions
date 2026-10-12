@@ -1,6 +1,6 @@
 # Competition
 
-- [Flu Shot Learning: Predict H1N1 and Seasonal Flu Vaccines](https://www.drivendata.org/competitions/66/flu-shot-learning/)
+- [LLM Classification Finetuning](https://www.kaggle.com/competitions/llm-classification-finetuning/overview)
 
 - Task: 26,707/26,708 train/test samples, with 35 predictive features (`respondent_id` excluded)
 
@@ -11,7 +11,9 @@
 # Results (as of 2026-10-09)
 | Method | Log-loss | Rank |
 |---|---|---|
+| `google/gemma-2-2b-it`/head-only | (bad) | (bad) |
 | `google/gemma-2-2b-it`/lora | 0.9722 | 41/248 (16.53%) |
+| `google/gemma-2-9b-it`/lora | (wip) | (wip) |
 
 
 
