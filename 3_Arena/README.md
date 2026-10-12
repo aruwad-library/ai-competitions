@@ -13,7 +13,7 @@
 |---|---|---|
 | `google/gemma-2-2b-it`/head-only | (bad) | (bad) |
 | `google/gemma-2-2b-it`/lora | 0.9722 | 41/248 (16.53%) |
-| `google/gemma-2-9b-it`/lora | (wip) | (wip) |
+| `google/gemma-2-9b-it`/lora | 0.9081 | 28/250 (11.20%) |
 
 
 
