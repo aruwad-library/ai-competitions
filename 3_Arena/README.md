@@ -1,73 +1,61 @@
-# Competition
+# Human Preference Prediction with Gemma 2
 
-- [LLM Classification Finetuning](https://www.kaggle.com/competitions/llm-classification-finetuning/overview)
+Task-aware input construction, validation, and offline deployment for human-preference classification.
 
-- Task: 26,707/26,708 train/test samples, with 35 predictive features (`respondent_id` excluded)
+## Competition
 
-- Participants: 9,223 participants / 2,443 competitors (as of 2026-10-09)
+[LLM Classification Finetuning](https://www.kaggle.com/competitions/llm-classification-finetuning) · Project: **2026-10-10–2026-10-13**
 
-- Period: 2026-10-10 ~ 2026-10-12
+- **Task:** predict whether a human preferred response A, response B, or a tie, given a prompt and two responses.
+- **Data:** 57,477 labeled training rows; approximately 25,000 [hidden test rows](https://www.kaggle.com/competitions/llm-classification-finetuning/data). Inputs: `prompt`, `response_a`, `response_b`. IDs are for alignment only.
+- **Metric:** multiclass log loss; submit three probabilities summing to one.
 
-# Results (as of 2026-10-09)
-| Method | Log-loss | Rank |
-|---|---|---|
-| `google/gemma-2-2b-it`/head-only | (bad) | (bad) |
-| `google/gemma-2-2b-it`/lora | 0.9722 | 41/248 (16.53%) |
-| `google/gemma-2-9b-it`/lora | 0.9081 | 28/250 (11.20%) |
+## Results — snapshot: 2026-10-13
 
+**Best public score: 0.90805 · rank 28/250 (top 11.2%).** Rolling public leaderboard—not a final placement or medal-awarding competition.
 
+| Submission | Public log loss ↓ | Outcome |
+|---|---:|---|
+| Gemma 2 2B + LoRA, single pass | 0.97220 | Initial scored LoRA baseline |
+| **Gemma 2 9B + LoRA, 2,048 tokens, single pass, T=0.9** | **0.90805** | **Best successful submission** |
+| Gemma 2 9B + A/B-swap TTA, T=0.9 | — | Timed out |
+| Gemma 2 9B, merged adapters + runtime-selected shorter context | 1.05793 | Rejected regression |
 
-<img src="./final_leaderboard.png" width="500">
-<br><br>
+The best submission reduced public log loss by **0.06415 (6.60%)** versus the 2B baseline.
 
+<img src="./final_leaderboard.png" width="760" alt="Public leaderboard snapshot: rank 28, score 0.90805">
 
-# Highlights
+## Highlights
 
-- Identified missing survey responses as predictive information; preserving missingness delivered the largest preprocessing gain.
+**Central design idea: treat the input as a structured comparison, not one string to truncate.**
 
-- Controlled experiments favored keeping all original predictors over feature pruning, with no consistent benefit from complex imputation or class weighting.
+- **Response-preserving token budgets:** decode multi-turn JSON; keep complete inputs when they fit; otherwise reserve space for both answers, redistribute unused capacity, and retain section beginnings/endings. This avoids simply truncating trailing response B.
+- **Task-aware evaluation:** split by normalized prompt, align models by example ID, and reverse A/B labels when swapping 50.2% of training rows. Swaps remain fixed across epochs.
+- **Deployment engineering:** compare TTA, calibration, and ensembles using saved logits; verify tokenizer/head restoration; repair cross-GPU adapter/head placement for offline T4×2 inference.
 
-- Selected preprocessing and XGBoost–CatBoost voting weights separately for H1N1 and seasonal vaccination, rather than assuming equal model contributions.
+Contribution: task-specific engineering, not a new fine-tuning algorithm. Bundled changes were not isolated by ablation.
 
-# Technical Summary
+## Technical Summary
 
-- Input: $X_{\mathrm{train}}$ with shape $(26{,}707, 35)$
-  - 23 numerically coded + 12 categorical features
-  - Binary, ordinal, and categorical survey responses
+**Validation:** one held-out fold from prompt-grouped `StratifiedGroupKFold`, not five-fold training: **45,981 train / 11,496 validation**. The 9B run splits validation into **5,747 selection / 5,749 audit**; selection controls checkpoint/calibration/blend choices. Audit was already included in the earlier 2B evaluation.
 
-- Output: $y \in \{0,1\}^{26{,}707 \times 2}$
-  - `h1n1_vaccine` / `seasonal_vaccine`
-  - Submission: one positive-class probability per target
+**Training:** `AutoModelForSequenceClassification` + cross-entropy; LoRA on transformer linear layers and a trainable classification head. Rank/alpha **32/64**, BF16 backbone, FP32 trainable parameters, effective batch **32**, peak LR **5e-5**, 5% warmup + linear decay. Early stopping: **1.50 epochs**; best: **checkpoint-1440**. One RTX 5090: **12.3 hours** including periodic evaluation, **22.84 GiB** peak PyTorch allocation. No QLoRA or full-parameter fine-tuning.
 
-- Evaluation: mean ROC-AUC across the two targets
+**Successful submission:** FP16 backbone computation across T4×2, saved FP32 head/adapters, dynamic padding, length sorting, and `softmax(logits / 0.9)`. No TTA, ensemble, merging, quantization, generation, or full validation pass. Multi-GPU **inference**, not distributed training.
 
-- Preprocessing
-  - Numerical — XGBoost
-    - Missingness indicators
-    - `SimpleImputer(strategy='median')` versus native missing-value handling
-    - `StandardScaler()`
-    - Opinion recoding with separate “don't know” indicators
-  - Categorical — XGBoost
-    - Employment-aware missing categories; observed answers preserved
-    - Explicit missing-category tokens instead of mode imputation
-    - `OneHotEncoder(handle_unknown='ignore')`
-  - CatBoost
-    - Native categorical features and numerical missing-value handling
+## Findings and Limits
 
-- Validation and HPO
-  - Five-fold `KFold`, with preprocessing fitted within each training fold
-  - Optuna: `TPESampler` + fold-level `MedianPruner`
-  - Early stopping for MLP and CatBoost
-  - Out-of-fold predictions for preprocessing and ensemble selection
+| Local configuration | Selection loss ↓ | Audit loss ↓ |
+|---|---:|---:|
+| 2B, original order, T=1 | 0.962445 | 0.967096 |
+| 9B, original order, T=1 | 0.895299 | 0.914849 |
+| 9B + swap-TTA, T=1 | 0.883663 | 0.898659 |
+| 9B + swap-TTA, T=0.9 | 0.881159 | 0.898040 |
 
-- EDA
-  - Label dependence, missingness patterns, response encoding, and train/test shift
-  - Held-out individual/grouped permutation importance and subgroup error analysis
-  - Controlled comparisons of imputation, class weights, scaling, and feature subsets
-  - Retained all original predictors; no outlier removal or class weighting
+The local recipe selected **zero 2B weight**. TTA helped locally but timed out during submission. **T=0.9 was selected with TTA**, then retained—not independently optimized—for single-pass inference.
 
-- Model
-  - Base candidates: `XGBClassifier` / `CatBoostClassifier` / two-hidden-layer PyTorch MLP
-  - Final model: target-specific weighted soft voting of XGBoost and CatBoost
-  - XGBoost preprocessing variant and voting weights selected separately for each target
-  - MLP excluded from the final submission
+The runtime-first fallback regressed. Its development run selected **256 total tokens**; the hidden-run cap is unconfirmed. Truncation, precision, and merging were not isolated. **Runtime success alone does not establish prediction quality.**
+
+Evidence: completed notebook outputs, training/evaluation reports, [leaderboard](./final_leaderboard.png), and [submission results](./submission_results.png).
+
+Methods informed by the historical LMSYS [first-place](https://www.kaggle.com/competitions/lmsys-chatbot-arena/discussion/527629) and [second-place](https://www.kaggle.com/competitions/lmsys-chatbot-arena/discussion/527685) reports, [PEFT](https://huggingface.co/docs/peft/package_reference/lora), and [temperature scaling](https://proceedings.mlr.press/v70/guo17a.html).
