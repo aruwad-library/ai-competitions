@@ -1,13 +1,20 @@
 # 1. Overview.
 
 ## Highlights.
-- **Open competition** on Kaggle, held by Google.
-- **Internal validation**: recorded mean Spearman's correlation of 0.3813 on a held-out split of the training data.
+- **Independent post-competition study** using Google's Kaggle Google QUEST dataset.
+- **Best internal-validation mean Spearman correlation: 0.3813.**
 - Custom model with bypass, for non-linguistic features.
 - Stage-wise Fine-Tuning, Alternating training between Full and Head-Only.
 - One head for all labels, to capture the relative info between labels.
-- Blog: [(tbd)]()
-- This is a post-competition experiment. The internal validation score does not establish an official leaderboard rank because it uses different evaluation data.
+
+## Evaluation
+
+The experiment uses an **80/20 split of the released training data**. The validation split was also used for checkpoint selection; 0.3813 is the best recorded score on that internal validation split, not a separate final test score.
+
+No official competition placement is claimed. Internal-validation scores are not converted into leaderboard ranks.
+
+- [Main experiment](./main.ipynb)
+- [Model and evaluation helpers](./methods.ipynb)
   
 ## What is 'Google QUEST Q&A Labeling'?
 
@@ -29,7 +36,7 @@
   - Full list is summarized below.
   - Example:
     - Question Title: "Best way to learn Python for data science?"
-    - Question Body: "I want to learn Python for data science. Should I start with courses or books?"
+    - Question Body: "Start learning Python with online courses or books?"
     - Answer Text: "Start with courses on Coursera or Udemy; they're hands-on. Books like 'Python for Data Analysis' are also helpful."
 
 - **Output:**
@@ -61,9 +68,7 @@
 | **Name**               | Google QUEST Q&A Labeling.                                                                          |
 | **Period**             | 2025.1.1 ~ 1.2. (2 days).                                                                       |
 | **Category**           | `Text Classification`<br>`Multi-label Classification`<br>`Question-Answering`                       |
-| **Tags**               | `NLP`, `LLM`, `Text Classification`<br>`QA`, `Kaggle`, `Competition`                        |
-| **Blog**               | [Velog]().                                                                                         |
-| **GitHub Repository**  | [GitHub]().                                                                                        |
+| **Tags**               | `NLP`, `LLM`, `Text Classification`<br>`QA`, `Kaggle`, `Post-competition Study`                        |
 
 
 
@@ -100,6 +105,6 @@
 
 | **Category**       | **Output Labels**                                                                                   |
 |:--------------------|:----------------------------------------------------------------------------------------------------|
-| **Question Labels** | `question_asker_intent_understanding`<br>`question_body_critical`<br>`question_conversational`<br>`question_expect_short_answer`<br>`question_fact_seeking`<br>`question_has_commonly_accepted_answer`<br>`question_interestingness_others`<br>`question_interestingness_self`<br>`question_multi_intent`<br>`question_not_really_a_question`<br>`question_opinion_seeking`<br>`question_type_choice`<br>`question_type_compare`<br>`question_type_consequence`<br>`question_type_definition`<br>`question_type_entity`<br>`question_type_instructions`<br>`question_type_procedure`<br>`question_type_reason_explanation`<br>`question_type_spelling`<br>`question_well_written` |
+| **Question Labels** | `question_asker_intent_understanding`<br>`question_body_critical`<br>`question_conversational`<br>`question_expect_short_answer`<br>`question_fact_seeking`<br>`question_has_commonly_accepted_answer`<br>`question_interestingness_others`<br>`question_multi_intent`<br>`question_not_really_a_question`<br>`question_opinion_seeking`<br>`question_type_choice`<br>`question_type_compare`<br>`question_type_consequence`<br>`question_type_definition`<br>`question_type_entity`<br>`question_type_instructions`<br>`question_type_procedure`<br>`question_type_reason_explanation`<br>`question_type_spelling`<br>`question_well_written` |
 | **Answer Labels**   | `answer_helpful`<br>`answer_level_of_information`<br>`answer_plausible`<br>`answer_relevance`<br>`answer_satisfaction`<br>`answer_type_instructions`<br>`answer_type_procedure`<br>`answer_type_reason_explanation`<br>`answer_well_written` |
 
