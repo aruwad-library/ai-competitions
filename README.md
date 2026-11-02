@@ -1,17 +1,37 @@
-# Machine Learning Competition Projects
+# Applied ML and NLP Projects
 
-Projects covering task-specific modeling, validation, and inference with competition datasets. Start with Arena for the most recent end-to-end example.
+Experiments in tabular prediction, human preference classification, and biomedical question answering.
 
-| Project | Focus | Results and evidence |
+This repository includes scored competition submissions and independent post-competition studies. Start with **Arena** for the most recent end-to-end training, evaluation, and inference work.
+
+## Projects
+
+| Project | Main work | Results and evidence |
 |---|---|---|
-| [Human Preference Prediction with Gemma 2](./3_Arena/README.md) | Structured prompt/response inputs, LoRA fine-tuning, grouped validation, and offline multi-GPU inference | Public leaderboard snapshot and local validation are reported separately |
-| [BioASQ Biomedical Yes/No QA](./5_BioASQ/README.md) | Biomedical text classification, evidence retrieval, class imbalance, and 4-bit LoRA experiments | Internal experiment logs and notebooks |
-| [Google QUEST Q&A Labeling](./4_Google_QUEST/README.md) | Multi-label prediction, metadata bypass, and staged fine-tuning | Post-competition internal validation |
-| [H1N1 Vaccine Prediction](./2_H1N1/README.md) | Tabular classification | See the project README and notebooks |
-| [Housing Price Prediction](./1_housing/README.md) | Tabular regression | See the project README and notebooks |
+| [Arena](./3_Arena/) | Gemma 2 LoRA fine-tuning, prompt-grouped validation, response-preserving token budgets, and offline inference | **Public log loss 0.90805; rank 28/250**, recorded on 2026-10-13 |
+| [H1N1](./2_H1N1/) | Missingness-aware preprocessing, target-specific model selection, and weighted ensembles | **Public mean ROC-AUC 0.8637; rank 96/2,448**, recorded on 2026-10-09 |
+| [House Prices](./1_housing/) | Regression, feature processing, data pruning, and ensemble comparisons | **Public log-RMSE 0.1180; rank 153/3,931**, recorded on 2026-10-09 |
+| [Google QUEST](./4_Google_QUEST/) | Transformer-based prediction with a metadata bypass and staged fine-tuning | Post-competition study; **best internal-validation mean Spearman correlation 0.3813** |
+| [BioASQ](./5_BioASQ/) | Biomedical encoders, document collection, LoRA, and class-weighted training | Post-competition study; exploratory internal evaluation |
 
-Each project documents its own evaluation setting. An internal validation score is not an official competition placement, and a public leaderboard snapshot is not a final rank.
+## Start with Arena
+
+- [Training and evaluation](./3_Arena/3_gemma2_9b_full_lora.ipynb)
+- [Single-pass submission](./3_Arena/3_gemma2_9b_submission_no_validation.ipynb)
+- [Results, implementation details, and limitations](./3_Arena/README.md)
+
+The task predicts human preferences using a classification loss. Training used LoRA with a BF16 backbone on one RTX 5090. The two-GPU setup was used for inference, not distributed training.
+
+## Evaluation notes
+
+Leaderboard ranks are dated public snapshots, not final-placement or medal claims. Each project's README links to the recorded evidence.
+
+Google QUEST uses an 80/20 split of the released training data; the validation split was also used for checkpoint selection. BioASQ's existing runs use class-dependent validation augmentation. These internal results are not converted into official leaderboard ranks.
 
 ## Running the notebooks
 
-The projects use Python/Jupyter and project-specific datasets, model checkpoints, and hardware. Review the imports and file paths in each notebook and install the dependencies listed in the root or project requirements before running it. Datasets and trained model artifacts are not bundled with these notebooks.
+Review each notebook's setup, data paths, model requirements, and hardware assumptions before running it. Some datasets, checkpoints, and local run artifacts are not included in this repository.
+
+## Related repository
+
+[AI/ML foundations and implementation notes](https://github.com/aruwad-library/ai-summary)
