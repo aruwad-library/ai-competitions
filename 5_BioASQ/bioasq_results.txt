@@ -1,0 +1,120 @@
+# 2025.02.22.
+<Hyperparameters>
+- Model        : distilbert-base-uncased
+- Learning Rate: 5e-05
+- Batch Size   : 8
+- Epochs       : 1
+
+<Results>
+- Accuracy     : 0.7169
+- F1-yes       : 0.8089
+- F1-no        : 0.4539
+- Macro-F1     : 0.6314
+- Train Loss   : 0.6738
+- Validation Loss: 0.6348
+
+<Training Time>
+- Total Time   : 5.97 seconds
+- Time per Epoch: 5.97 seconds
+- Time per Step : 0.0439 seconds
+
+# 2025.02.22.
+<Hyperparameters>
+- Model        : distilbert-base-uncased
+- Learning Rate: 5e-05
+- Batch Size   : 8
+- Epochs       : 1
+
+<Results>
+- Accuracy     : 0.7169
+- F1-yes       : 0.8089
+- F1-no        : 0.4539
+- Macro-F1     : 0.6314
+- Train Loss   : 0.6738
+- Validation Loss: 0.6348
+
+<Training Time>
+- Total Time   : 6.19 seconds
+- Time per Epoch: 6.19 seconds
+- Time per Step : 0.0455 seconds
+
+# 2025.02.22.
+<Hyperparameters>
+- Model        : distilbert-base-uncased
+- Learning Rate: 5e-05
+- Batch Size   : 8
+- Epochs       : 1
+
+<Results>
+- Accuracy     : 0.739
+- F1-yes       : 0.8499
+- F1-no        : 0.0
+- Macro-F1     : 0.4249
+- Train Loss   : 0.6927
+- Validation Loss: 0.6863
+
+<Training Time>
+- Total Time   : 11.03 seconds
+- Time per Epoch: 11.03 seconds
+- Time per Step : 0.0811 seconds
+
+# 2025.02.22.
+<Hyperparameters>
+- Model        : distilbert-base-uncased
+- Learning Rate: 5e-05
+- Batch Size   : 8
+- Epochs       : 1
+
+<Results>
+- Accuracy     : 0.7169
+- F1-yes       : 0.8089
+- F1-no        : 0.4539
+- Macro-F1     : 0.6314
+- Train Loss   : 0.6738
+- Validation Loss: 0.6348
+
+<Training Time>
+- Total Time   : 5.92 seconds
+- Time per Epoch: 5.92 seconds
+- Time per Step : 0.0436 seconds
+
+# 2025.02.22.
+<Hyperparameters>
+- Model        : distilbert-base-uncased
+- Learning Rate: 5e-05
+- Batch Size   : 8
+- Epochs       : 1
+
+<Results>
+- Accuracy     : 0.739
+- F1-yes       : 0.8499
+- F1-no        : 0.0
+- Macro-F1     : 0.4249
+- Train Loss   : 0.7007
+- Validation Loss: 0.7106
+
+<Training Time>
+- Total Time   : 10.74 seconds
+- Time per Epoch: 10.74 seconds
+- Time per Step : 0.079 seconds
+
+# 2025.02.22.
+<Hyperparameters>
+- Model        : distilbert-base-uncased
+- Learning Rate: 4.109030845123883e-05
+- Batch Size   : 8
+- Epochs       : 1
+
+<Results>
+- Accuracy     : 0.7059
+- F1-yes       : 0.8086
+- F1-no        : 0.3651
+- Macro-F1     : 0.5868
+- Train Loss   : 0.6836
+- Validation Loss: 0.6664
+
+<Training Time>
+- Total Time   : 7.56 seconds
+- Time per Epoch: 7.56 seconds
+- Time per Step : 0.0556 seconds
+
