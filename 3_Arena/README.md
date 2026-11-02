@@ -56,6 +56,6 @@ The local recipe selected **zero 2B weight**. TTA helped locally but timed out d
 
 The runtime-first fallback regressed. Its development run selected **256 total tokens**; the hidden-run cap is unconfirmed. Truncation, precision, and merging were not isolated. **Runtime success alone does not establish prediction quality.**
 
-Evidence: completed notebook outputs, training/evaluation reports, [leaderboard](./final_leaderboard.png), and [submission results](./submission_results.png).
+Evidence: completed notebook outputs, training/evaluation reports, [leaderboard](./final_leaderboard.png), and the [single-pass submission notebook](./3_gemma2_9b_submission_no_validation.ipynb).
 
 Methods informed by the historical LMSYS [first-place](https://www.kaggle.com/competitions/lmsys-chatbot-arena/discussion/527629) and [second-place](https://www.kaggle.com/competitions/lmsys-chatbot-arena/discussion/527685) reports, [PEFT](https://huggingface.co/docs/peft/package_reference/lora), and [temperature scaling](https://proceedings.mlr.press/v70/guo17a.html).

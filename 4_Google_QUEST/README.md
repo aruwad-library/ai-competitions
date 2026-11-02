@@ -2,12 +2,12 @@
 
 ## Highlights.
 - **Open competition** on Kaggle, held by Google.
-- **Rank**: 127 / 1,572 (Spearman's Correlation = 0.3813).
+- **Internal validation**: recorded mean Spearman's correlation of 0.3813 on a held-out split of the training data.
 - Custom model with bypass, for non-linguistic features.
 - Stage-wise Fine-Tuning, Alternating training between Full and Head-Only.
 - One head for all labels, to capture the relative info between labels.
 - Blog: [(tbd)]()
-- Note) Project and results are post-competition.
+- This is a post-competition experiment. The internal validation score does not establish an official leaderboard rank because it uses different evaluation data.
   
 ## What is 'Google QUEST Q&A Labeling'?
 
